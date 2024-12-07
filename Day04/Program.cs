@@ -1,22 +1,44 @@
 ﻿
+// Part 01
+//    0 1 2 3 4 5
+// 0  . . X . . .
+// 1  . S A M X .
+// 2  . A . . A .
+// 3  X M A S . S
+// 4  . X . . . .
+// 2633
 
-//   0 1 2 3 4 5
-//0  . . X . . .
-//1  . S A M X .
-//2  . A . . A .
-//3  X M A S . S
-//4  . X . . . .
+// Part 02
+
+// .M.S......
+// ..A..MSMS.
+// .M.S.MAA..
+// ..A.ASMSM.
+// .M.S.M....
+// ..........
+// S.S.S.S.S.
+// .A.A.A.A..
+// M.M.M.M.M.
+// ..........
+// 2715   -- too high
+// 1936
+
+//SSSS
+//.AA.
+//MMMM
 
 using Common;
 
 var xmasTemplate = "XMAS";
 var samxTemplate = "SAMX";
+var masTemplate = "MAS";
+var samTemplate = "SAM";
 
 var lines = InputHelper.ReadInputFile(InputFileName.Input04);
-Console.WriteLine($"Part01: {Part01_CountTheWordOccurs(lines)}");
+Console.WriteLine($"Part01: {Part01_CountXmas(lines)}");
+Console.WriteLine($"Part02: {Part02_Count2MasInShapeOfX(lines)}");
 
-
-int Part01_CountTheWordOccurs(string[] matrix) {
+int Part01_CountXmas(string[] matrix) {
   var count = 0;
 
   for (int idX = 0; idX < matrix.Length; idX++) {
@@ -41,7 +63,6 @@ int Part01_CountTheWordOccurs(string[] matrix) {
 
   count += CountByDiagonal(matrix);
 
-
   return count;
 }
 
@@ -64,7 +85,7 @@ static List<string> GetAllDiagonals(string[] matrx) {
   var cols = matrx[0].Length;
 
   // Take the main diagonals from the first row
-  Console.WriteLine("\nMain diagonals from the first row");
+  // Console.WriteLine("\nMain diagonals from the first row");
   for (int startCol = 0; startCol < cols; startCol++) {
     List<char> mainDiagonal = [];
     for (int i = 0, j = startCol; i < rows && j < cols; i++, j++) {
@@ -72,11 +93,11 @@ static List<string> GetAllDiagonals(string[] matrx) {
     }
     var str = new string(mainDiagonal.ToArray());
     allDiagonals.Add(str);
-    Console.WriteLine(str);
+    // Console.WriteLine(str);
   }
 
   // Take the main diagonals from the first column (ignore the first element as it was taken above)
-  Console.WriteLine("\nMain diagonals from the first column");
+  // Console.WriteLine("\nMain diagonals from the first column");
   for (int startRow = 1; startRow < rows; startRow++) {
     List<char> mainDiagonal = new List<char>();
     for (int i = startRow, j = 0; i < rows && j < cols; i++, j++) {
@@ -84,11 +105,11 @@ static List<string> GetAllDiagonals(string[] matrx) {
     }
     var str = new string(mainDiagonal.ToArray());
     allDiagonals.Add(str);
-    Console.WriteLine(str);
+    // Console.WriteLine(str);
   }
 
   // Take the sub-diagonals from the first row
-  Console.WriteLine("\nSub-diagonals from the first row");
+  // Console.WriteLine("\nSub-diagonals from the first row");
   for (int startCol = 0; startCol < cols; startCol++) {
     List<char> antiDiagonal = new List<char>();
     for (int i = 0, j = startCol; i < rows && j >= 0; i++, j--) {
@@ -96,11 +117,11 @@ static List<string> GetAllDiagonals(string[] matrx) {
     }
     var str = new string(antiDiagonal.ToArray());
     allDiagonals.Add(str);
-    Console.WriteLine(str);
+    // Console.WriteLine(str);
   }
 
   // sub-diagonals from the first column
-  Console.WriteLine("\nduong cheo phu tu cot cuoi cung");
+  // Console.WriteLine("\nduong cheo phu tu cot cuoi cung");
   for (int startRow = 1; startRow < rows; startRow++) {
     List<char> antiDiagonal = new List<char>();
     for (int i = startRow, j = cols - 1; i < rows && j >= 0; i++, j--) {
@@ -108,7 +129,7 @@ static List<string> GetAllDiagonals(string[] matrx) {
     }
     var str = new string(antiDiagonal.ToArray());
     allDiagonals.Add(str);
-    Console.WriteLine(str);
+    // Console.WriteLine(str);
   }
 
   return allDiagonals;
@@ -139,6 +160,30 @@ int CountByHorizontal(int index, string line) {
     var xmasSubtr = line.Substring(index, xmasTemplate.Length);
     if (xmasSubtr == xmasTemplate) {
       count++;
+    }
+  }
+
+  return count;
+}
+
+int Part02_Count2MasInShapeOfX(string[] matrix) {
+  var count = 0;
+
+  for (int idX = 1; idX < matrix.Length - 1; idX++) {
+    for (int idY = 1; idY < matrix[0].Length - 1; idY++) {
+      if (matrix[idX][idY] == 'A') {
+        List<char> mainDiagonal = [matrix[idX - 1][idY - 1], 'A', matrix[idX + 1][idY + 1]];
+        var mainDiagonalStr = new string(mainDiagonal.ToArray());
+        var checkMainDiagonalIsMas = mainDiagonalStr == masTemplate || mainDiagonalStr == samTemplate;
+
+        List<char> subDiagonal = [matrix[idX + 1][idY - 1], 'A', matrix[idX - 1][idY + 1]];
+        var subDiagonalStr = new string(subDiagonal.ToArray());
+        var checksubDiagonalIsMas = subDiagonalStr == masTemplate || subDiagonalStr == samTemplate;
+
+        if (checkMainDiagonalIsMas && checksubDiagonalIsMas) {
+          count++;
+        }
+      }
     }
   }
 
