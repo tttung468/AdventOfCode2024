@@ -7,10 +7,12 @@
 //3  X M A S . S
 //4  . X . . . .
 
+using Common;
+
 var xmasTemplate = "XMAS";
 var samxTemplate = "SAMX";
 
-var lines = ReadInputFile();
+var lines = InputHelper.ReadInputFile(InputFileName.Input04);
 Console.WriteLine($"Part01: {Part01_CountTheWordOccurs(lines)}");
 
 
@@ -141,13 +143,4 @@ int CountByHorizontal(int index, string line) {
   }
 
   return count;
-}
-
-static string[] ReadInputFile() {
-  string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-  string projectDirectory = Directory.GetParent(baseDirectory).Parent.Parent.Parent.FullName;
-  string filePath = Path.Combine(projectDirectory, "Day04Input.txt");
-  string[] lines = File.ReadAllLines(filePath);
-
-  return lines;
 }

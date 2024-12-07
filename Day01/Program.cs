@@ -1,5 +1,7 @@
 ﻿
 
+using Common;
+
 int totalDistance = Part01CalculateTotalDistance();
 Console.WriteLine($"Part 01: total distance = {totalDistance}");
 
@@ -8,10 +10,7 @@ Console.WriteLine($"Part 02: similarity score = {similarityScore}");
 
 
 static void Part01ReadInputFile(List<int> leftColumnDict, List<int> rightColumnDict) {
-  string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-  string projectDirectory = Directory.GetParent(baseDirectory).Parent.Parent.Parent.FullName;
-  string filePath = Path.Combine(projectDirectory, "Day01Input.txt");
-  string[] lines = File.ReadAllLines(filePath);
+  string[] lines = InputHelper.ReadInputFile(InputFileName.Input01);
 
   foreach (string line in lines) {
     // Split the line into two parts
@@ -41,10 +40,7 @@ static int Part01CalculateTotalDistance() {
 }
 
 static void Part02ReadInputFile(Dictionary<int, int> leftColumnDict, Dictionary<int, int> rightColumnDict) {
-  string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-  string projectDirectory = Directory.GetParent(baseDirectory).Parent.Parent.Parent.FullName;
-  string filePath = Path.Combine(projectDirectory, "Day01Input.txt");
-  string[] lines = File.ReadAllLines(filePath);
+  string[] lines = InputHelper.ReadInputFile(InputFileName.Input01);
 
   foreach (string line in lines) {
     // Split the line into two parts

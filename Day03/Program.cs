@@ -17,16 +17,18 @@
 // 87 863 550   -- too high
 // 41 197 404   -- wrong
 // 83 158 140
+using Common;
 using System.Text.RegularExpressions;
 
 var mulTemplate = "mul(";
 var doInstructionTemplate = "do()";
 var dontInstructionTemplate = "don't()";
+var lines = InputHelper.ReadInputFile(InputFileName.Input03);
 
-var resultPart01 = Part01_MultiplyNumbersInMessyLines(ReadInputFile());
+var resultPart01 = Part01_MultiplyNumbersInMessyLines(lines);
 Console.WriteLine($"Part 01: {resultPart01}\n\n");
 
-var resultPart02 = Part02_MultiplyNumbersWithInstruction(ReadInputFile());
+var resultPart02 = Part02_MultiplyNumbersWithInstruction(lines);
 Console.WriteLine($"Part 02: {resultPart02}");
 
 long Part01_MultiplyNumbersInMessyLines(string[] lines) {
@@ -87,7 +89,7 @@ long Part02_MultiplyNumbersWithInstruction(string[] lines) {
   return result;
 }
 
-long Part02_MultiplyNumbersWithInstruction_Ai(string[] lines) {
+long Part02_MultiplyNumbersWithInstruction_Regex_ToDo(string[] lines) {
   long result = 0;
 
   foreach (var line in lines) {
@@ -150,13 +152,4 @@ long MultiplyFactors(string split) {
 
   Console.WriteLine($"{parsedFactorX} - \t{parsedFactorY} - \t{split}");
   return parsedFactorX * parsedFactorY;
-}
-
-static string[] ReadInputFile() {
-  string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-  string projectDirectory = Directory.GetParent(baseDirectory).Parent.Parent.Parent.FullName;
-  string filePath = Path.Combine(projectDirectory, "Day03Input.txt");
-  string[] lines = File.ReadAllLines(filePath);
-
-  return lines;
 }
