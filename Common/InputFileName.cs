@@ -9,5 +9,6 @@
     public const string Input07 = "Input07.txt";
     public const string Input08 = "Input08.txt";
     public const string Input09 = "Input09.txt";
+    public const string Input10 = "Input10.txt";
   }
 }

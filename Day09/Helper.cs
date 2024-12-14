@@ -1,7 +1,7 @@
 ﻿using Common;
 using System.Text;
 
-namespace Day08;
+namespace Day09;
 
 public static class Helper {
   public const char DotChar = '.';

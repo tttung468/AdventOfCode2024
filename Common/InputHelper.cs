@@ -1,6 +1,7 @@
 ﻿namespace Common;
 
 public static class InputHelper {
+  public const char DotChar = '.';
 
   public static List<List<int>> ReadInputFile_HavingIntColumns(string fileName) {
     string[] lines = ReadInputFile(fileName);
@@ -29,7 +30,7 @@ public static class InputHelper {
     return lines;
   }
 
-  public static char[,] ReadMatrixFromFile(string fileName) {
+  public static char[,] ReadCharacterMatrix(string fileName) {
     var lines = ReadInputFile(fileName);
     int rows = lines.Length;
     int cols = lines[0].Length;
@@ -44,23 +45,43 @@ public static class InputHelper {
     return matrix;
   }
 
-  public static void PrintMap(char[,] map) {
-    for (int i = 0; i < map.GetLength(0); i++) {
-      for (int j = 0; j < map.GetLength(1); j++) {
-        Console.Write(map[i, j] + "");
+  public static int[,] ReadIntegerMatrix(string fileName) {
+    var lines = ReadInputFile(fileName);
+    int rows = lines.Length;
+    int cols = lines[0].Length;
+    var matrix = new int[rows, cols];
+
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        if (lines[i][j] == DotChar) {
+          matrix[i, j] = int.MaxValue;
+        } else {
+          matrix[i, j] = int.Parse(lines[i][j].ToString());
+        }
+      }
+    }
+
+    return matrix;
+  }
+
+  public static void PrintMatrix<T>(T[,] matrix) {
+    for (int i = 0; i < matrix.GetLength(0); i++) {
+      for (int j = 0; j < matrix.GetLength(1); j++) {
+        Console.Write(matrix[i, j] + "");
       }
       Console.WriteLine("");
     }
     Console.WriteLine("");
   }
 
-  public static char[,] CopyMap(char[,] map) {
-    char[,] copy = new char[map.GetLength(0), map.GetLength(1)];
-    for (int i = 0; i < map.GetLength(0); i++) {
-      for (int j = 0; j < map.GetLength(1); j++) {
-        copy[i, j] = map[i, j];
+  public static T[,] CopyMatrix<T>(T[,] matrix) {
+    T[,] copy = new T[matrix.GetLength(0), matrix.GetLength(1)];
+    for (int i = 0; i < matrix.GetLength(0); i++) {
+      for (int j = 0; j < matrix.GetLength(1); j++) {
+        copy[i, j] = matrix[i, j];
       }
     }
     return copy;
   }
+
 }

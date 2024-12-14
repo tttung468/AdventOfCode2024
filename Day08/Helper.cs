@@ -7,7 +7,7 @@ public static class Helper {
 
   public static (char[,] map, Dictionary<char, List<Location>> antennasDictionary) ReadAntennasFromFile() {
     Dictionary<char, List<Location>> antennasDictionary = [];
-    var map = InputHelper.ReadMatrixFromFile(InputFileName.Input08);
+    var map = InputHelper.ReadCharacterMatrix(InputFileName.Input08);
 
     for (int i = 0; i < map.GetLength(0); i++) {
       for (int j = 0; j < map.GetLength(1); j++) {
@@ -24,7 +24,7 @@ public static class Helper {
   }
 
   public static void PrintMapWithAntinodes(char[,] map, Dictionary<string, Location> uniqueAntinodes) {
-    var copiedMap = InputHelper.CopyMap(map);
+    var copiedMap = InputHelper.CopyMatrix(map);
 
     foreach (var pair in uniqueAntinodes) {
       if (copiedMap[pair.Value.X, pair.Value.Y] == DotChar) {
@@ -32,7 +32,7 @@ public static class Helper {
       }
     }
 
-    InputHelper.PrintMap(copiedMap);
+    InputHelper.PrintMatrix(copiedMap);
   }
 
   public static int CountAntennas(char[,] map) {
