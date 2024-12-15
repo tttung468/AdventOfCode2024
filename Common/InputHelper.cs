@@ -22,12 +22,17 @@ public static class InputHelper {
   }
 
   public static string[] ReadInputFile(string fileName) {
+    string filePath = GetFilePath(fileName);
+    string[] lines = File.ReadAllLines(filePath);
+    return lines;
+  }
+
+  public static string GetFilePath(string fileName) {
     string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
     string projectDirectory = Directory.GetParent(baseDirectory).Parent.Parent.Parent.Parent.FullName
       + "\\Common\\Inputs";
     string filePath = Path.Combine(projectDirectory, fileName);
-    string[] lines = File.ReadAllLines(filePath);
-    return lines;
+    return filePath;
   }
 
   public static char[,] ReadCharacterMatrix(string fileName) {
